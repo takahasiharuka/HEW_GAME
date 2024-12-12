@@ -5,7 +5,7 @@ void Game::Init(HWND hWnd) {
 	//sound.Init();
 	//sound.Play(SOUND_LABEL_BGM000);
 
-	player.Init(L"asset/char01.png", 3, 4); //プレイヤーを初期化
+	player.Init(L"asset/image.png", 3, 4); //プレイヤーを初期化
 	player.SetPos(-100.0f, -154.0f, 0.0f);     //位置を設定
 	player.SetSize(60.0f, 90.0f, 0.0f);  //大きさを設定
 	player.SetAngle(0.0f);                 //角度を設定
@@ -20,7 +20,7 @@ void Game::Init(HWND hWnd) {
 	pause.SetSize(640.0f, 480.0f, 0.0f);
 	pauseFg = false;
 
-	background.Init(L"asset/stage.jpg");
+	background.Init(L"asset/background.png");
 	background.SetPos(0.0f, 0.0f, 0.0f);
 	background.SetSize(640.0f, 480.0f, 0.0f);
 	background.SetAngle(0.0f);
@@ -43,7 +43,7 @@ void Game::Init(HWND hWnd) {
 	scoreboard.SetSize(40.0f, 40.0f, 0.0f);
 	score = 0;
 
-	result.Init(L"asset/result1.png");
+	result.Init(L"asset/haikei.png");
 	result.SetPos(0.0f, 0.0f, 0.0f);
 	result.SetSize(640.0f, 480.0f, 0.0f);
 
