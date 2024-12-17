@@ -1,12 +1,9 @@
 ﻿#pragma once
-
 #include"direct3d.h"
 #include "WICTextureLoader.h"
 // ※ID3D11で始まるポインタ型の変数は、解放する必要がある
 class Object {
-
 private:
-	int velocity;
 	Vertex vertexList[4] =
 	{
 		// x      y      z   r    g    b     a   u    v
@@ -33,10 +30,11 @@ private:
 	ID3D11ShaderResourceView* m_pTextureView;
 	int splitX = 1;
 	int splitY = 1;
+	
 public:
 	float numU = 0;
 	float numV = 0;
-	void Init(const wchar_t* imgname, int sx = 1, int sy = 1); //初期化​
+	void Init(const wchar_t* imgname,int sx=1,int sy=1); //初期化​
 	void Draw();//描画​
 	void Uninit();//終了​
 	void SetPos(float x, float y, float z);
@@ -46,10 +44,8 @@ public:
 	DirectX::XMFLOAT3 GetPos(void);
 	DirectX::XMFLOAT3 GetSize(void);
 	float GetAngle(void);
-
-	struct State {
+	DirectX::XMFLOAT4 GetColor(void);
+	struct State{
 		float x;
 	};
-
-
 };

@@ -1,56 +1,56 @@
-ï»¿#include "Object.h"
-void Object::Init(const wchar_t* imgname, int sx, int sy)
-{
+#include "Object.h"
+void Object::Init(const wchar_t* imgname,int sx,int sy)
+{ 
 	splitX = sx;
 	splitY = sy;
 	vertexList[1].u = 1.0f / splitX;
 	vertexList[2].v = 1.0f / splitY;
 	vertexList[3].u = 1.0f / splitX;
 	vertexList[3].v = 1.0f / splitY;
-	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½œæˆã™ã‚‹?
-	// â€»é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡â†’VRAMã«é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ç½®ããŸã‚ã®æ©Ÿèƒ½?
+// ’¸“_ƒoƒbƒtƒ@‚ğì¬‚·‚é?
+// ¦’¸“_ƒoƒbƒtƒ@¨VRAM‚É’¸“_ƒf[ƒ^‚ğ’u‚­‚½‚ß‚Ì‹@”\?
 	D3D11_BUFFER_DESC bufferDesc;
-	bufferDesc.ByteWidth = sizeof(vertexList);// ç¢ºä¿ã™ã‚‹ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚ºã‚’æŒ‡å®š
+	bufferDesc.ByteWidth = sizeof(vertexList);// Šm•Û‚·‚éƒoƒbƒtƒ@ƒTƒCƒY‚ğw’è
 	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ä½œæˆã‚’æŒ‡å®š
+	bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;// ’¸“_ƒoƒbƒtƒ@ì¬‚ğw’è
 	bufferDesc.CPUAccessFlags = 0;
 	bufferDesc.MiscFlags = 0;
 	bufferDesc.StructureByteStride = 0;
 	D3D11_SUBRESOURCE_DATA subResourceData;
-	subResourceData.pSysMem = vertexList;// VRAMã«é€ã‚‹ãƒ‡ãƒ¼ã‚¿ã‚’æŒ‡å®š
+	subResourceData.pSysMem = vertexList;// VRAM‚É‘—‚éƒf[ƒ^‚ğw’è
 	subResourceData.SysMemPitch = 0;
 	subResourceData.SysMemSlicePitch = 0;
 	HRESULT hr = g_pDevice->CreateBuffer(&bufferDesc, &subResourceData, &m_pVertexBuffer);
-	hr = DirectX::CreateWICTextureFromFile(g_pDevice, imgname, NULL, &m_pTextureView);
+	hr = DirectX::CreateWICTextureFromFile(g_pDevice,imgname, NULL, &m_pTextureView);
 	/*hr = g_pDevice->CreateBuffer(&bufferDesc, &subResourceData, &g_pVertexBuffer);*/
 	/*if (FAILED(hr)) return hr;*/
-	//ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿
-
+	//ƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İ
+	
 	if (FAILED(hr)) {
-		MessageBoxA(NULL, "ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿å¤±æ•—", "ã‚¨ãƒ©ãƒ¼", MB_ICONERROR | MB_OK);
+		MessageBoxA(NULL, "ƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İ¸”s", "ƒGƒ‰[", MB_ICONERROR | MB_OK);
 		return;
 	}
 }
 void Object::Draw() {
-	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’è¨­å®š
+	//’¸“_ƒoƒbƒtƒ@‚ğİ’è
 	UINT strides = sizeof(Vertex);
 	UINT offsets = 0;
 	g_pDeviceContext->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &strides, &offsets);
-	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã«æ¸¡ã™
+//ƒeƒNƒXƒ`ƒƒ‚ğƒsƒNƒZƒ‹ƒVƒF[ƒ_[‚É“n‚·
 	g_pDeviceContext->PSSetShaderResources(0, 1, &m_pTextureView);
-	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã‚’æ›´æ–°
+	//’è”ƒoƒbƒtƒ@‚ğXV
 	ConstBuffer cb;
 	cb.matrixProj = DirectX::XMMatrixOrthographicLH(
 		SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 3.0f
 	);
 	cb.matrixProj = DirectX::XMMatrixTranspose(cb.matrixProj);
-
-	//ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›è¡Œåˆ—ã®ä½œæˆ
+	
+	//ƒ[ƒ‹ƒh•ÏŠ·s—ñ‚Ìì¬
 	cb.matrixWorld = DirectX::XMMatrixScaling(size.x, size.y, size.z);
-	cb.matrixWorld *= DirectX::XMMatrixRotationZ(angle * 3.14f / 180);
+	cb.matrixWorld *= DirectX::XMMatrixRotationZ(angle*3.14f/180);
 	cb.matrixWorld *= DirectX::XMMatrixTranslation(pos.x, pos.y, pos.z);
 	cb.matrixWorld = DirectX::XMMatrixTranspose(cb.matrixWorld);
-	//uvã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®è¡Œåˆ—ä½œæˆ
+	//uvƒAƒjƒ[ƒVƒ‡ƒ“‚Ìs—ñì¬
 	float u = (float)numU / splitX;
 	float v = (float)numV / splitY;
 	cb.matrixTex = DirectX::XMMatrixTranslation(u, v, 0.0f);
@@ -67,7 +67,7 @@ void Object::SetPos(float x, float y, float z) {
 	pos.x = x;
 	pos.y = y;
 	pos.z = z;
-	kyarapos.x = x;
+    kyarapos.x = x;
 	kyarapos.y = y;
 	kyarapos.z = z;
 	lovepos.x = x;
@@ -95,15 +95,18 @@ void Object::SetColor(float r, float g, float b, float a) {
 	color.w = a;
 }
 DirectX::XMFLOAT3 Object::GetPos(void) {
-	return pos;
+	return pos; 
 	return kyarapos;
 	return lovepos;
 }
 DirectX::XMFLOAT3 Object::GetSize(void) {
-	return size;
+	return size; 
 	return kyarasize;
 	return lovesize;
 }
 float Object::GetAngle(void) {
 	return angle;
+}
+DirectX::XMFLOAT4 Object::GetColor(void) {
+	return color;
 }

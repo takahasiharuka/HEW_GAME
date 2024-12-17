@@ -8,17 +8,26 @@ struct PS_IN
     // float4型　→　float型が４つの構造体
     float4 pos : SV_POSITION; // ピクセルの画面上の座標
     float4 col : COLOR0;
-    float2 tex : TEXCOORD;
+    float2 tex : TEXCOORD; // ピクセルのUV座標
+
 };
-Texture2D myTexture : register(t0);
-SamplerState mySampler : register(s0);
+
+// グローバル変数の宣言
+// ※C言語側からデータを渡された時にセットされる変数
+Texture2D myTexture : register(t0); //テクスチャー
+SamplerState mySampler : register(s0); //サンプラー
+
+
 // ピクセルシェーダーのエントリポイント
 float4 ps_main(PS_IN input) : SV_Target
 {
-    float4 color = myTexture.Sample(mySampler, input.tex);
-    color = color * input.col;
-    
-    return color;
-    
+//    return float4(1, 1, 1, 1);
 
+    // Sample関数→テクスチャから該当のUV位置のピクセル色を取って来る
+    float4 color = myTexture.Sample(mySampler, input.tex);
+   
+    color *= input.col;
+    
+    // 決定した色をreturnする。
+    return color;
 }

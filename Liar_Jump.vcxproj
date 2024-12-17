@@ -127,21 +127,52 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Audio.cpp" />
+    <ClCompile Include="BufferHelpers.cpp" />
+    <ClCompile Include="CommonStates.cpp" />
+    <ClCompile Include="conioex.cpp" />
+    <ClCompile Include="DDSTextureLoader.cpp" />
     <ClCompile Include="direct3d.cpp" />
+    <ClCompile Include="DirectXHelpers.cpp" />
+    <ClCompile Include="DirectXTK.cpp" />
+    <ClCompile Include="Effects.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="WICTextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Audio.h" />
+    <ClInclude Include="BufferHelpers.h" />
+    <ClInclude Include="CommonStates.h" />
+    <ClInclude Include="conioex.h" />
+    <ClInclude Include="DDSTextureLoader.h" />
     <ClInclude Include="direct3d.h" />
+    <ClInclude Include="DirectXHelpers.h" />
+    <ClInclude Include="Effects.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GamePad.h" />
+    <ClInclude Include="GeometricPrimitive.h" />
+    <ClInclude Include="GraphicsMemory.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="main.h" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="Mouse.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="PostProcess.h" />
+    <ClInclude Include="PrimitiveBatch.h" />
+    <ClInclude Include="ScreenGrab.h" />
+    <ClInclude Include="SimpleMath.h" />
     <ClInclude Include="sound.h" />
+    <ClInclude Include="SpriteBatch.h" />
+    <ClInclude Include="SpriteFont.h" />
+    <ClInclude Include="VertexTypes.h" />
     <ClInclude Include="WICTextureLoader.h" />
+    <ClInclude Include="XboxDDSTextureLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PixelShader.hlsl">
@@ -152,6 +183,9 @@
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">vs_main</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SimpleMath.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
